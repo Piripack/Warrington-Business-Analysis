@@ -1,0 +1,335 @@
+:root {
+    --primary-color: #2C3E50;
+    --accent-color: #3498DB;
+    --background-color: #FFFFFF;
+    --text-color: #000000;
+    --legend-background-color: rgba(255, 255, 255, 0.9);
+    --legend-text-color: #000000;
+    --hover-color: #2980B9;
+}
+body.dark-mode {
+    --primary-color: #FFFFFF;
+    --accent-color: #3498DB;
+    --background-color: #2C3E50;
+    --text-color: #FFFFFF;
+    --legend-background-color: rgba(44, 62, 80, 0.9);
+    --legend-text-color: #FFFFFF;
+    --hover-color: #5DADE2;
+}
+
+body.dark-mode .navbar-brand {
+    color: #FFFFFF; /* White color for dark mode */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+}
+
+.navbar {
+    background-color: var(--background-color) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+
+.nav-link {
+    color: var(--primary-color) !important;
+    font-weight: 400;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    z-index: 2; /* Add this line */
+}
+
+.map-container {
+    height: 600px; /* Set a fixed height for the map */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+
+.legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--legend-background-color);
+    color: var(--legend-text-color);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    max-width: 300px;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.legend:hover {
+    opacity: 1;
+    background: var(--legend-background-color);
+}
+
+@media (max-width: 768px) {
+    .legend {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin: 1rem auto;
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.process-card, .insight-card {
+    background: var(--background-color);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.process-card:hover, .insight-card:hover {
+    transform: translateY(-5px);
+}
+
+.process-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+body.dark-mode .navbar {
+    background: var(--background-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar .nav-link {
+    color: var(--text-color) !important;
+}
+
+.navbar .nav-link:hover {
+    color: var(--hover-color) !important;
+}
+.nav-tabs .nav-link {
+    color: var(--primary-color);
+    border: none;
+    padding: 1rem 2rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--accent-color);
+    color: white !important;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Removed duplicate chart-container definition */
+
+.insight-metric {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color); /* Use text color variable */
+    margin: 10px 0;
+}
+ 
+.insight-label {
+    font-size: 0.9rem;
+    color: var(--text-color); /* Use text color variable */
+    margin-bottom: 15px;
+}
+
+#map {
+    width: 100%;
+    height: 800px; /* Adjust based on your layout */
+    margin: 0 auto;
+    position: relative;
+}
+
+.loading {
+    position: relative;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.legend-gradient {
+    position: relative;
+    height: 30px;
+}
+
+.legend-color {
+    background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+}
+
+.legend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.map-control-btn {
+    background: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-control-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.insight-category {
+    margin-bottom: 2rem;
+}
+
+.insight-heading {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.insight-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.insight-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.insight-list li:last-child {
+    border-bottom: none;
+}
+
+.chart-container {
+    margin: 20px 0;
+    position: relative;
+    height: 300px;
+}
+
+.tab-content {
+    overflow: visible;
+}
+
+footer {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 1rem 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.social-icon {
+    margin: 0 10px;
+    color: var(--accent-color); /* Change this to your desired color */
+    font-size: 1.5rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-icon:hover {
+    color: var(--hover-color); /* Change this to your desired hover color */
+}
