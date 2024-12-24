@@ -1,0 +1,1051 @@
+<html lang="en"><head><base href="map.html" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warrington Business Intelligence Hub</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="icon" href="data-collection.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+:root {
+    --primary-color: #2C3E50;
+    --accent-color: #3498DB;
+    --background-color: #FFFFFF;
+    --text-color: #000000;
+    --legend-background-color: rgba(255, 255, 255, 0.9);
+    --legend-text-color: #000000;
+}
+
+body.dark-mode {
+    --primary-color: #FFFFFF;
+    --accent-color: #3498DB;
+    --background-color: #2C3E50;
+    --text-color: #FFFFFF;
+    --legend-background-color: rgba(44, 62, 80, 0.9);
+    --legend-text-color: #FFFFFF;
+}
+
+body.dark-mode .navbar-brand {
+    color: #FFFFFF; /* White color for dark mode */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+}
+
+.navbar {
+    background: var(--background-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+
+.nav-link {
+    color: var(--primary-color) !important;
+    font-weight: 400;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    z-index: 2; /* Add this line */
+}
+
+.map-container {
+    height: 600px; /* Set a fixed height for the map */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+
+.legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--legend-background-color);
+    color: var(--legend-text-color);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    max-width: 300px;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.legend:hover {
+    opacity: 1;
+    background: var(--legend-background-color);
+}
+
+@media (max-width: 768px) {
+    .legend {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin: 1rem auto;
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.process-card, .insight-card {
+    background: var(--background-color);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.process-card:hover, .insight-card:hover {
+    transform: translateY(-5px);
+}
+
+.process-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+}
+
+.nav-tabs .nav-link {
+    color: var(--primary-color);
+    border: none;
+    padding: 1rem 2rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--accent-color);
+    color: white !important;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.chart-container {
+    margin: 20px 0;
+    position: relative;
+    height: 200px;
+}
+
+.insight-metric {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color); /* Use text color variable */
+    margin: 10px 0;
+}
+ 
+.insight-label {
+    font-size: 0.9rem;
+    color: var(--text-color); /* Use text color variable */
+    margin-bottom: 15px;
+}
+
+#map {
+    width: 100%;
+    height: 800px; /* Adjust based on your layout */
+    margin: 0 auto;
+    position: relative;
+}
+
+.loading {
+    position: relative;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.legend-gradient {
+    position: relative;
+    height: 30px;
+}
+
+.legend-color {
+    background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+}
+
+.legend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.map-control-btn {
+    background: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-control-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.insight-category {
+    margin-bottom: 2rem;
+}
+
+.insight-heading {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.insight-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.insight-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.insight-list li:last-child {
+    border-bottom: none;
+}
+
+.chart-container {
+    margin: 20px 0;
+    position: relative;
+    height: 300px;
+}
+
+.tab-content {
+    overflow: visible;
+}
+
+footer {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 1rem 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.social-icon {
+    margin: 0 10px;
+    color: var(--accent-color); /* Change this to your desired color */
+    font-size: 1.5rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-icon:hover {
+    color: var(--hover-color); /* Change this to your desired hover color */
+}
+
+
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+<div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" title="Warrington Business Insights">Warrington Business Intelligence Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <button class="btn btn-outline-secondary" id="themeToggle">Dark Mode</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <ul class="nav nav-tabs" id="analysisTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="overview-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Project Overview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="map-tab" data-bs-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="false">Interactive Map</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="process-tab" data-bs-toggle="tab" href="#process" role="tab" aria-controls="process" aria-selected="false">Methodology</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="insights-tab" data-bs-toggle="tab" href="#insights" role="tab" aria-controls="insights" aria-selected="false">Key Insights</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="detailed-analysis-tab" data-bs-toggle="tab" href="#detailed-analysis" role="tab" aria-controls="detailed-analysis" aria-selected="false">In-Depth Analysis</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-4" id="analysisTabContent">
+        <!-- Project Overview -->
+        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <h2 class="mb-4">Project Overview</h2>
+                    <p class="lead mb-4">
+                        The Warrington Business Intelligence Hub project delves into the region's commercial landscape through advanced geospatial analytics, uncovering patterns, opportunities, and actionable insights. By leveraging the Google Maps API, clustering techniques, and interactive visualizations, the project identifies five distinct business clusters, each with unique characteristics.
+                    </p>
+                    <h4 class="mb-3">Key Findings</h4>
+                    
+                    <h5 class="mt-4">Cluster Performance:</h5>
+                    <ul class="feature-list mb-4">
+                        <li>Cluster 1 leads with the highest business count (132) and diversity (13 types), including clothing stores and lodging, making it the most vibrant and varied cluster.</li>
+                        <li>Cluster 4 underperforms with the lowest average rating (4.18) and limited business diversity, dominated by car dealerships.</li>
+                    </ul>
+
+                    <h5 class="mt-4">Opportunities:</h5>
+                    <ul class="feature-list mb-4">
+                        <li>Diversification is crucial for underperforming areas like Cluster 4, where introducing cafes and entertainment venues could improve customer engagement.</li>
+                        <li>Cluster 2 shows potential to expand its family-oriented entertainment offerings.</li>
+                    </ul>
+
+                    <h5 class="mt-4">Diverse Business Types:</h5>
+                    <ul class="feature-list mb-4">
+                        <li>Clothing stores, car dealerships, and spas dominate Warrington's business landscape, with clusters exhibiting varying levels of specialization.</li>
+                    </ul>
+
+                    <div class="text-center mt-5">
+                        <button class="btn btn-primary" onclick="document.getElementById('map-tab').click()">
+                            Explore Interactive Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Tab -->
+        <div class="tab-pane fade" id="map" role="tabpanel">
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <h2 class="mb-4">Business Clusters in Warrington</h2>
+                    <p class="lead mb-4">Click on the markers to view insights about each cluster. The heatmap shows business density (red = high density).</p>
+                </div>
+            </div>
+
+            <div class="map-wrapper">
+                <div class="map-controls">
+                    <button class="map-control-btn" id="resetMapBtn">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="currentColor" d="M12,4C14.1,4 16.1,4.8 17.6,6.3L20,4V9H15L17.7,6.3C16.5,5.1 14.9,4.5 13,4.5C8.9,4.5 5.5,7.9 5.5,12C5.5,16.1 8.9,19.5 13,19.5C15.8,19.5 18.2,17.8 19.2,15.5H20.7C19.6,18.6 16.5,21 13,21C8,21 4,17 4,12C4,7 8,3 13,3"/>
+                        </svg>
+                        Reset View
+                    </button>
+                </div>
+                <div class="map-container" id="folium-map">
+                    <iframe src="final_updated_warrington_map.html"
+                            width="100%"
+                            height="600px"
+                            style="border: none;"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="legend">
+                    <h5 class="mb-3">Map Legend</h5>
+                    <!-- Heatmap Density Bar -->
+                    <div class="legend-item">
+                        <div class="legend-color" style="
+                            background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+                            width: 100%;
+                            height: 15px;
+                            border-radius: 5px;">
+                        </div>
+                        <span>Low to High Business Density</span>
+                    </div>
+                    <div class="legend-item">
+                        <span><b>Cluster 1:</b> High density, central location.</span>
+                    </div>
+                    <div class="legend-item">
+                        <span><b>Cluster 2:</b> Emerging suburban area.</span>
+                    </div>
+                    <div class="legend-item">
+                        <span><b>Cluster 3:</b> Medium density, diverse businesses.</span>
+                    </div>
+                    <div class="legend-item">
+                        <span><b>Cluster 4:</b> Peripheral, lower density.</span>
+                    </div>
+                    <div class="legend-item">
+                        <span><b>Cluster 5:</b> High density, northern hub.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Process Tab -->
+        <div class="tab-pane fade" id="process" role="tabpanel">
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <h2 class="mb-4">Analysis Methodology</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="process-card">
+                        <img src="https://img.icons8.com/ios/50/000000/database.png" alt="Data Collection Icon" width="50" height="50">
+                        <h4>Data Collection</h4>
+                        <p>Source: Business data was retrieved using the Google Maps API, including business names, types, locations, ratings, and review counts within Warrington.</p>
+                        <p>Objective: To ensure the dataset was comprehensive and up-to-date as of December 22, 2024.</p>
+                        <p>Validation: Data was checked for completeness and consistency to ensure accuracy for subsequent analysis.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="process-card">
+                        <img src="https://img.icons8.com/ios/50/000000/process.png" alt="Data Processing Icon" width="50" height="50">
+                        <h4>Data Processing and Cleaning</h4>
+                        <p>ETL Pipeline: Designed an Extract, Transform, Load (ETL) pipeline to:</p>
+                        <ul>
+                            <li>Handle missing or incomplete values.</li>
+                            <li>Remove duplicates and irrelevant entries (e.g., businesses outside Warrington).</li>
+                            <li>Normalize data formats (e.g., converting ratings to numeric values).</li>
+                        </ul>
+                        <p>Outcome: A clean, structured dataset ready for analysis.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="process-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" /> <!-- Central node -->
+                            <line x1="12" y1="12" x2="5" y2="5" />
+                            <circle cx="5" cy="5" r="2" /> <!-- Connected node -->
+                            <line x1="12" y1="12" x2="19" y2="5" />
+                            <circle cx="19" y="5" r="2" /> <!-- Connected node -->
+                            <line x1="12" y1="12" x2="5" y2="19" />
+                            <circle cx="5" y="19" r="2" /> <!-- Connected node -->
+                          </svg>
+                        <h4>Clustering Analysis</h4>
+                        <p>Technique: Applied K-means clustering to group businesses into distinct clusters based on their geospatial location.</p>
+                        <p>Features Used:</p>
+                        <ul>
+                            <li>Latitude and Longitude for geographic proximity.</li>
+                            <li>Ratings and review counts for quality and popularity.</li>
+                        </ul>
+                        <p>Result: Five distinct clusters highlighting areas with varying business density and characteristics.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="process-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3v18h18M3 15l5-5 4 4 7-7" />
+                          </svg>
+                        <h4>Visualization</h4>
+                        <p>Interactive Map: Created an interactive heatmap and cluster visualization using Folium to display:</p>
+                        <ul>
+                            <li>High-density business zones.</li>
+                            <li>Average ratings and review counts per cluster.</li>
+                        </ul>
+                        <p>Charts: Supplemented with bar charts and pie charts for quick comparison of cluster characteristics.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="process-card">
+                        <img src="https://img.icons8.com/ios/50/000000/light-on.png" alt="Insights Icon" width="50" height="50">
+                        <h4>Insights Extraction</h4>
+                        <p>Analysis Goals:</p>
+                        <ul>
+                            <li>Identify underperforming clusters with growth opportunities.</li>
+                            <li>Highlight top-performing businesses and common business types within clusters.</li>
+                        </ul>
+                        <p>Outcome: Key observations were translated into actionable insights for decision-making.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div class="tab-pane fade" id="insights" role="tabpanel">
+            <div class="row mb-4">
+            <div class="col-lg-12">
+                <h2 class="mb-4">Key Insights</h2>
+                <p class="lead mb-4"></p>
+                Analysis of Warrington's business clusters reveals distinct patterns in performance, opportunities, and business composition across different areas of the city. Here are the key findings from our analysis.
+                </p>
+                
+                <h4 class="mb-3">Cluster Performance Highlights</h4>
+                <ul class="feature-list mb-4">
+                <li>Cluster 4 demonstrates the lowest performance metrics with a 4.18 average rating and limited business diversity, primarily focused on car dealerships.</li>
+                <li>Cluster 1 emerges as the leading hub with 132 businesses and 13 distinct business types, showcasing strong diversity in retail and services.</li>
+                </ul>
+
+                <h4 class="mb-3">Growth Opportunities</h4>
+                <ul class="feature-list mb-4">
+                <li>Cluster 4's underperformance presents opportunities for diversification through cafes and entertainment venues.</li>
+                <li>Cluster 2 shows potential for expansion in family-oriented entertainment offerings to complement existing retail strength.</li>
+                </ul>
+
+                <h4 class="mb-3">Business Distribution</h4>
+                <ul class="feature-list mb-4">
+                <li>Dominant sectors across clusters include clothing stores, shoe retailers, and automotive businesses.</li>
+                <li>Specialized areas have emerged:
+                    <ul>
+                    <li>Cluster 1: Fashion and retail focus</li>
+                    <li>Cluster 2: Luxury retail (jewelry) and dining</li>
+                    <li>Cluster 5: Automotive and electronics concentration</li>
+                    </ul>
+                </li>
+                </ul>
+
+                <h4 class="mb-3">Performance Metrics</h4>
+                <ul class="feature-list mb-4">
+                <li>Direct correlation observed between business diversity and customer satisfaction ratings.</li>
+                <li>Areas with limited variety show consistently lower engagement and satisfaction scores.</li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="commonBusinessTypesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Analysis Panel -->
+        <div class="tab-pane fade" id="detailed-analysis" role="tabpanel">
+            <h2 class="mb-4">In-Depth Analysis</h2>
+            <!-- Cluster Performance Summary -->
+            <h3 class="mb-3">Cluster Performance Summary</h3>
+            <div class="table-responsive mb-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Cluster</th>
+                            <th>Average Rating</th>
+                            <th>Business Count</th>
+                            <th>Most Common Type</th>
+                            <th>Key Observation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>4.27</td>
+                            <td>132</td>
+                            <td>Clothing Store</td>
+                            <td>High diversity and vibrant market</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>4.38</td>
+                            <td>25</td>
+                            <td>Jewelry Store</td>
+                            <td>High-rated but smaller variety</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>4.38</td>
+                            <td>27</td>
+                            <td>Car Repair</td>
+                            <td>Strong presence of auto-related</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>4.18</td>
+                            <td>20</td>
+                            <td>Car Dealer</td>
+                            <td>Underperforming, low diversity</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>4.34</td>
+                            <td>33</td>
+                            <td>Car Dealer</td>
+                            <td>High reviews, but repetitive mix</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Chart 1: Business Distribution by Cluster -->
+            <h3 class="mb-3">Business Distribution by Cluster</h3>
+            <div class="chart-container">
+                <canvas id="businessDistributionChart"></canvas>
+            </div>
+
+            <!-- Chart 2: Average Rating by Cluster -->
+            <h3 class="mb-3">Average Rating by Cluster</h3>
+            <div class="chart-container">
+                <canvas id="averageRatingChart"></canvas>
+            </div>
+
+            <!-- Top Performing Businesses -->
+            <h3 class="mb-3">Top Performing Businesses</h3>
+            <div class="table-responsive mb-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Rating</th>
+                            <th>Review Count</th>
+                            <th>Cluster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>T H Baker</td>
+                            <td>Jewelry Store</td>
+                            <td>5.0</td>
+                            <td>196</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Cheshire Gold Xchange</td>
+                            <td>Jewelry Store</td>
+                            <td>5.0</td>
+                            <td>81</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>SkinGenius Clinic</td>
+                            <td>Spa</td>
+                            <td>5.0</td>
+                            <td>275</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Currys</td>
+                            <td>Electronics Store</td>
+                            <td>3.8</td>
+                            <td>2217</td>
+                            <td>5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Chart 3: Top Business Types by Cluster -->
+            <h3 class="mb-3">Top Business Types by Cluster</h3>
+            <div class="chart-container">
+                <canvas id="topBusinessTypesChart"></canvas>
+            </div>
+
+            <!-- Charts -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <canvas id="ratingChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <canvas id="businessCountChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", function () {
+    // Theme toggle functionality
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+    });
+
+    // Add the Folium map to the designated container
+    const foliumMapContainer = document.getElementById("folium-map");
+    foliumMapContainer.innerHTML = `
+        <iframe src="final_updated_warrington_map.html"
+                width="100%"
+                height="600px"
+                style="border: none;"
+                allowfullscreen>
+        </iframe>
+    `;
+
+    const resetMapBtn = document.getElementById('resetMapBtn');
+    const mapIframe = document.querySelector('#folium-map iframe');
+
+    const reloadMap = () => {
+        mapIframe.src = mapIframe.src;
+    };
+
+    // Reload map automatically on page load with a delay
+    setTimeout(reloadMap, 1);
+
+    resetMapBtn.addEventListener('click', reloadMap);
+
+    mapIframe.addEventListener('load', () => {
+        // Ensure clusters are visible on initial load
+        mapIframe.contentWindow.postMessage('showClusters', '*');
+    });
+
+    // Initialize animation observer for process and insight cards
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = "translateY(0)";
+            }
+        });
+    });
+
+    // Apply animations to cards
+    document.querySelectorAll(".process-card, .insight-card").forEach((card) => {
+        card.style.opacity = 0;
+        card.style.transform = "translateY(20px)";
+        card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        observer.observe(card);
+    });
+
+    // Chart Data and Configuration
+    const businessDistributionData = {
+        labels: ["Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5"],
+        datasets: [{
+            label: "Business Count",
+            data: [132, 25, 27, 20, 33],
+            backgroundColor: "#3498DB",
+        }]
+    };
+
+    const averageRatingData = {
+        labels: ["Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5"],
+        datasets: [{
+            label: "Average Rating",
+            data: [4.27, 4.38, 4.38, 4.18, 4.34],
+            backgroundColor: ["#3498DB", "#2ECC71", "#9B59B6", "#F1C40F", "#E74C3C"],
+        }]
+    };
+
+    const topBusinessTypesData = {
+    labels: ["Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5"], // Clusters on the X-axis
+    datasets: [
+        {
+            label: "Retail",
+            data: [40, 25, 20, 15, 30], // Counts for each cluster
+            backgroundColor: "#3498DB",
+        },
+        {
+            label: "Food",
+            data: [30, 35, 25, 20, 20], // Counts for each cluster
+            backgroundColor: "#2ECC71",
+        },
+        {
+            label: "Services",
+            data: [20, 30, 35, 25, 25], // Counts for each cluster
+            backgroundColor: "#9B59B6",
+        },
+        {
+            label: "Entertainment",
+            data: [10, 10, 20, 40, 25], // Counts for each cluster
+            backgroundColor: "#F1C40F",
+        }
+    ]
+};
+
+
+    const barConfig = {
+        type: "bar",
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    };
+
+    const stackedBarConfig = {
+        type: "bar",
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                },
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                },
+            },
+        },
+    };
+
+    // Create Charts
+    new Chart(document.getElementById("businessDistributionChart"), {
+        ...barConfig,
+        data: businessDistributionData,
+    });
+
+    new Chart(document.getElementById("averageRatingChart"), {
+        ...barConfig,
+        data: averageRatingData,
+    });
+
+    new Chart(document.getElementById("topBusinessTypesChart"), {
+        ...stackedBarConfig,
+        data: topBusinessTypesData,
+    });
+
+    // Force the Folium map to redraw after a small delay
+    const mapObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const iframe = foliumMapContainer.querySelector("iframe");
+                if (iframe) {
+                    iframe.src = iframe.src; // Reload the iframe to redraw the map
+                }
+            }
+        });
+    });
+
+    mapObserver.observe(foliumMapContainer);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const triggerTabList = document.querySelectorAll('#analysisTab .nav-link');
+    triggerTabList.forEach(triggerEl => {
+        const tabTrigger = new bootstrap.Tab(triggerEl);
+        triggerEl.addEventListener('click', event => {
+            event.preventDefault();
+            tabTrigger.show();
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const resetMapBtn = document.getElementById('resetMapBtn');
+    const mapIframe = document.querySelector('#folium-map iframe');
+
+    const reloadMap = () => {
+        mapIframe.src = mapIframe.src;
+    };
+
+    resetMapBtn.addEventListener('click', reloadMap);
+
+    mapIframe.addEventListener('load', () => {
+        // Ensure clusters are visible on initial load
+        mapIframe.contentWindow.postMessage('showClusters', '*');
+    });
+});
+
+// Add before existing chart initialization code
+const diversityData = {
+    labels: ["Cluster 0", "Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4"],
+    datasets: [{
+        label: "Business Diversity",
+        data: [13, 10, 9, 8, 13],
+        backgroundColor: ["#3498DB", "#2ECC71", "#9B59B6", "#F1C40F", "#E74C3C"],
+    }]
+};
+
+new Chart(document.getElementById("diversityChart"), {
+    type: "bar",
+    data: diversityData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const mapTab = document.getElementById('map-tab');
+    const foliumMap = document.getElementById('folium-map');
+    let mapInitialized = false;
+
+    mapTab.addEventListener('click', function() {
+        if (!mapInitialized) {
+            // Initialize map when tab is clicked
+            foliumMap.innerHTML = `
+                <iframe 
+                    src="final_updated_warrington_map.html"
+                    width="100%"
+                    height="600px"
+                    style="border: none;"
+                    allowfullscreen>
+                </iframe>
+            `;
+            
+            const mapIframe = foliumMap.querySelector('iframe');
+            const resetMapBtn = document.getElementById('resetMapBtn');
+
+            resetMapBtn.addEventListener('click', () => {
+                mapIframe.src = mapIframe.src;
+            });
+
+            mapInitialized = true;
+        }
+    });
+});
+
+
+const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            position: "bottom"
+        }
+    },
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+};
+
+new Chart(document.getElementById("ratingChart"), {
+    type: "bar",
+    data: ratingData,
+    options: chartOptions
+});
+
+new Chart(document.getElementById("businessCountChart"), {
+    type: "bar",
+    data: businessCountData,
+    options: chartOptions
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Disable right-click
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+    });
+
+    // ...existing code...
+});
+</script>
+
+<footer class="text-center py-4">
+
+    <a href="https://www.linkedin.com/in/awmr" target="_blank" class="social-icon">
+        <i class="fab fa-linkedin fa-3x"></i>
+    </a>
+    <a href="https://github.com/Piripack" target="_blank" class="social-icon">
+        <i class="fab fa-github fa-3x"></i>
+    </a>
+    <a href="mailto:andre.wilsonramos@gmail.com" class="social-icon">
+        <i class="fas fa-envelope fa-3x"></i>
+    </a>
+    <p></p>
+    <p>&copy; 2024 Andre Ramos. All rights reserved.</p>
+  
+</footer>
+</body>
+</html> 
