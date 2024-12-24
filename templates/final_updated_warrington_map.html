@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_072e06e99091eeb025ca5fc9039c5756 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_072e06e99091eeb025ca5fc9039c5756" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_072e06e99091eeb025ca5fc9039c5756 = L.map(
+                "map_072e06e99091eeb025ca5fc9039c5756",
+                {
+                    center: [53.39, -2.5969],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ece26bfe166ba4b008ac0ff5b3c75cbf = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ece26bfe166ba4b008ac0ff5b3c75cbf.addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var heat_map_2203bc17338b947de8a251e4a3113686 = L.heatLayer(
+                [[53.3906356, -2.5962111], [53.3901223, -2.5942108], [53.3893947, -2.5965094], [53.3904311, -2.5935776], [53.39005599999999, -2.5951515], [53.3800287, -2.575596500000001], [53.39024699999999, -2.595536], [53.3898056, -2.5959024], [53.3895737, -2.5953848], [53.39005599999999, -2.5951515], [53.37284369999999, -2.581863499999999], [53.3719805, -2.581379499999999], [53.38977370000001, -2.595865], [53.39042799999999, -2.5947185], [53.39042739999999, -2.594700599999999], [53.38827329999999, -2.5929262], [53.3952037, -2.5909725], [53.3916976, -2.5827725], [53.387199, -2.579924], [53.372986, -2.5814307], [53.3987459, -2.6055192], [53.38625279999999, -2.6022906], [53.38299019999999, -2.5950576], [53.3924602, -2.593712], [53.3845249, -2.5947679], [53.4044552, -2.6184251], [53.39275, -2.5915374], [53.386591, -2.595455], [53.370997, -2.580309], [53.39128029999999, -2.598554399999999], [53.3931051, -2.5895077], [53.3821111, -2.5960905], [53.406099, -2.5924355], [53.3873455, -2.5840756], [53.3815609, -2.5905649], [53.39148549999999, -2.5862231], [53.3901103, -2.5984908], [53.38996609999999, -2.5987198], [53.38802949999999, -2.598236], [53.3910898, -2.5932151], [53.397614, -2.6069276], [53.4013868, -2.5935416], [53.407563, -2.5965088], [53.38379219999999, -2.5923198], [53.3979837, -2.607308999999999], [53.399849, -2.5920868], [53.3915562, -2.6068099], [53.3820954, -2.5736311], [53.4067811, -2.5996596], [53.3979843, -2.595498], [53.3976666, -2.6068904], [53.398971, -2.604446599999999], [53.3913314, -2.5743383], [53.407806, -2.600471999999999], [53.3975303, -2.5731405], [53.3976741, -2.5730805], [53.4062701, -2.5965653], [53.38170149999999, -2.5674406], [53.3960553, -2.5665712], [53.37884989999999, -2.5609679], [53.38654380000001, -2.5866714], [53.40516220000001, -2.5927708], [53.386342, -2.585513999999999], [53.385913, -2.597306], [53.3941171, -2.5961606], [53.39023530000001, -2.5941219], [53.3903229, -2.6064503], [53.39185870000001, -2.5857063], [53.40683780000001, -2.5774108], [53.3897413, -2.5918966], [53.38468140000001, -2.626297300000001], [53.3917297, -2.592413000000001], [53.4094466, -2.5979722], [53.3987459, -2.6055192], [53.387163, -2.593436000000001], [53.400071, -2.592384], [53.37035909999999, -2.5808011], [53.3701267, -2.580580099999999], [53.390609, -2.592998], [53.3703735, -2.581573], [53.3999683, -2.5966532], [53.3717683, -2.5817465], [53.4083655, -2.5720785], [53.3816879, -2.5600353], [53.388527, -2.588541], [53.39393190000001, -2.612456], [53.38745580000001, -2.6021932], [53.39888329999999, -2.5858956], [53.38598169999999, -2.6136011], [53.3980324, -2.5875294], [53.3895359, -2.5925664], [53.3884605, -2.5982657], [53.3887895, -2.5959982], [53.39105300000001, -2.5957656], [53.39145540000001, -2.5902327], [53.40516220000001, -2.5927708], [53.386342, -2.585513999999999], [53.385913, -2.597306], [53.3954607, -2.5958352], [53.3910195, -2.5968067], [53.3910421, -2.5961934], [53.390165, -2.59647], [53.37985459999999, -2.599172599999999], [53.390305, -2.595423100000001], [53.38906830000001, -2.6077081], [53.38997309999999, -2.5931352], [53.3897353, -2.5881023], [53.38955509999999, -2.591258], [53.3901873, -2.5861797], [53.38927960000001, -2.5957512], [53.3897258, -2.5958201], [53.3901958, -2.5954028], [53.390263, -2.595528], [53.38299019999999, -2.5950576], [53.38788940000001, -2.594391700000001], [53.3864051, -2.5991942], [53.3889787, -2.6080709], [53.3831244, -2.5951235], [53.397552, -2.573221], [53.3811677, -2.5660276], [53.369848, -2.582207099999999], [53.3897575, -2.5960053], [53.3903831, -2.5936889], [53.3878377, -2.5949576], [53.3865943, -2.5992521], [53.3861753, -2.5969983], [53.38814159999999, -2.588418899999999], [53.390394, -2.6068787], [53.3899275, -2.584506499999999], [53.3925071, -2.5803722], [53.3980255, -2.6083033], [53.3797132, -2.5884842], [53.4045842, -2.591542], [53.3906955, -2.5963472], [53.37131329999999, -2.5817407], [53.39005599999999, -2.5951515], [53.386342, -2.585513999999999], [53.3910421, -2.5961934], [53.3898325, -2.5952624], [53.390263, -2.595528], [53.38936229999999, -2.5950608], [53.3897625, -2.594785299999999], [53.38972800000001, -2.5963091], [53.3993604, -2.595311999999999], [53.3899908, -2.5971796], [53.3853345, -2.5845837], [53.3888359, -2.592709], [53.3904048, -2.5970841], [53.39049060000001, -2.5971394], [53.3900863, -2.594826], [53.3894748, -2.5932891], [53.38816680000001, -2.592788300000001], [53.39728210000001, -2.5956775], [53.38625279999999, -2.6022906], [53.38299019999999, -2.5950576], [53.3924602, -2.593712], [53.387163, -2.593436000000001], [53.37035909999999, -2.5808011], [53.4147972, -2.5992867], [53.3811366, -2.5660086], [53.3871218, -2.59396], [53.3884605, -2.5982657], [53.38772700000001, -2.5925825], [53.38672, -2.5922222], [53.384978, -2.5893979], [53.3888732, -2.5973647], [53.38854310000001, -2.5961557], [53.388439, -2.598297], [53.3871086, -2.5924968], [53.38437159999999, -2.5939654], [53.391046, -2.5809032], [53.37097600000001, -2.581768], [53.3894677, -2.5873439], [53.38654380000001, -2.5866714], [53.3899791, -2.5953855], [53.39023530000001, -2.5941219], [53.383745, -2.582746499999999], [53.3829962, -2.5895952], [53.39037829999999, -2.6278033], [53.38903139999999, -2.5944015], [53.3923832, -2.591602], [53.3952037, -2.5909725], [53.3872228, -2.5874059], [53.39506700000001, -2.590526], [53.39741970000001, -2.5964072], [53.39829280000001, -2.587113500000001], [53.38459830000001, -2.6272701], [53.4089879, -2.5979749], [53.3691107, -2.5822186], [53.4081857, -2.614522], [53.3893583, -2.596882700000001], [53.3863411, -2.5853352], [53.3900581, -2.6082211], [53.3924602, -2.593712], [53.39145540000001, -2.5902327], [53.391991, -2.596837], [53.38598169999999, -2.6136011], [53.3712563, -2.582463], [53.3895338, -2.5946657], [53.3893885, -2.594072], [53.388439, -2.598297], [53.3900273, -2.5932599], [53.3972721, -2.5955664], [53.38122789999999, -2.5934099], [53.3949, -2.6108], [53.3698653, -2.5814627], [53.373999, -2.583996], [53.4083672, -2.5963906], [53.36968860000001, -2.5815882], [53.38498419999999, -2.6326109], [53.3943018, -2.592677], [53.3674377, -2.5796793], [53.3894598, -2.5957844], [53.38654380000001, -2.5866714], [53.3792656, -2.5876676], [53.3897455, -2.608777099999999], [53.397614, -2.6069276], [53.38435520000001, -2.5892981], [53.399849, -2.5920868], [53.3808844, -2.5834078], [53.3855465, -2.5833036], [53.3945996, -2.6015631], [53.3915562, -2.6068099], [53.3839126, -2.6038858], [53.405804, -2.576079999999999], [53.3889924, -2.5885372], [53.3975092, -2.5899706], [53.3951979, -2.589620800000001], [53.3902821, -2.5858562], [53.3931, -2.612491], [53.3845886, -2.6047697], [53.3826231, -2.5988886], [53.39287299999999, -2.604831], [53.38866700000001, -2.5969176], [53.386591, -2.595455], [53.3875885, -2.598484], [53.369735, -2.580831], [53.39709899999999, -2.5982457], [53.39979899999999, -2.5691566], [53.3974609, -2.6018256], [53.3971262, -2.5982309], [53.38996299999999, -2.5856832], [53.39538710000001, -2.5771248], [53.38264969999999, -2.5779591], [53.3879587, -2.5957104], [53.3923889, -2.5956682], [53.3877166, -2.5929446], [53.38611469999999, -2.596999], [53.3833583, -2.5910091], [53.39880309999999, -2.586328], [53.3749504, -2.5866033], [53.3750715, -2.5850495], [53.37513939999999, -2.5842266]],
+                {
+  "minOpacity": 0.8,
+  "maxZoom": 19,
+  "radius": 15,
+  "blur": 10,
+}
+            );
+        
+    
+            heat_map_2203bc17338b947de8a251e4a3113686.addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var marker_5aec230949b5127c40b547677d31600a = L.marker(
+                [53.388517896428574, -2.5937576264285718],
+                {
+}
+            ).addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var div_icon_df8fc33aad6ed499f75d05ae24d25085 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"font-size: 14px; font-weight: bold; color: black; background-color: white;\n                            border-radius: 50%; text-align: center; width: 25px; height: 25px;\n                            line-height: 25px; border: 2px solid blue;\"\u003e\n                    1\n                \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+            marker_5aec230949b5127c40b547677d31600a.setIcon(div_icon_df8fc33aad6ed499f75d05ae24d25085);
+        
+    
+        var popup_72e21e3ad9fc66bf9284ef07352c2a95 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3e9624b873b243ba09e8ac300799cf69 = $(`<div id="html_3e9624b873b243ba09e8ac300799cf69" style="width: 100.0%; height: 100.0%;"><b>Cluster 1</b><br>Total Businesses: 140.0<br>Average Rating: 4.28<br>Total Reviews: 39109.0<br><i>Insight:</i> High density, low ratings. Improve quality or introduce premium services.</div>`)[0];
+                popup_72e21e3ad9fc66bf9284ef07352c2a95.setContent(html_3e9624b873b243ba09e8ac300799cf69);
+            
+        
+
+        marker_5aec230949b5127c40b547677d31600a.bindPopup(popup_72e21e3ad9fc66bf9284ef07352c2a95)
+        ;
+
+        
+    
+    
+            var marker_951b2373bb4f3ddaed7a53bf6234a3ae = L.marker(
+                [53.37344541785715, -2.582149292857143],
+                {
+}
+            ).addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var div_icon_8e98df565e84d765d676ea6436912a39 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"font-size: 14px; font-weight: bold; color: black; background-color: white;\n                            border-radius: 50%; text-align: center; width: 25px; height: 25px;\n                            line-height: 25px; border: 2px solid blue;\"\u003e\n                    2\n                \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+            marker_951b2373bb4f3ddaed7a53bf6234a3ae.setIcon(div_icon_8e98df565e84d765d676ea6436912a39);
+        
+    
+        var popup_3c98d0465d1cbc8d6e57d77b04e67c3e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eae452e8b431b8dc2219b44aed06a00b = $(`<div id="html_eae452e8b431b8dc2219b44aed06a00b" style="width: 100.0%; height: 100.0%;"><b>Cluster 2</b><br>Total Businesses: 28.0<br>Average Rating: 4.38<br>Total Reviews: 5433.0<br><i>Insight:</i> Moderate density, high ratings. Ideal for premium or boutique businesses.</div>`)[0];
+                popup_3c98d0465d1cbc8d6e57d77b04e67c3e.setContent(html_eae452e8b431b8dc2219b44aed06a00b);
+            
+        
+
+        marker_951b2373bb4f3ddaed7a53bf6234a3ae.bindPopup(popup_3c98d0465d1cbc8d6e57d77b04e67c3e)
+        ;
+
+        
+    
+    
+            var marker_72e5aeb6485110aa1b0eacffe6d59b2b = L.marker(
+                [53.392954706896546, -2.6114154310344833],
+                {
+}
+            ).addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var div_icon_a4f8cf7128664667f85bbdf3c6369bcb = L.divIcon({
+  "html": "\n                \u003cdiv style=\"font-size: 14px; font-weight: bold; color: black; background-color: white;\n                            border-radius: 50%; text-align: center; width: 25px; height: 25px;\n                            line-height: 25px; border: 2px solid blue;\"\u003e\n                    3\n                \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+            marker_72e5aeb6485110aa1b0eacffe6d59b2b.setIcon(div_icon_a4f8cf7128664667f85bbdf3c6369bcb);
+        
+    
+        var popup_d5d124c7277d9f19e317815c51beb84e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f8528f06bc1d89a67af76584daba4a3f = $(`<div id="html_f8528f06bc1d89a67af76584daba4a3f" style="width: 100.0%; height: 100.0%;"><b>Cluster 3</b><br>Total Businesses: 29.0<br>Average Rating: 4.38<br>Total Reviews: 6898.0<br><i>Insight:</i> Diverse but inconsistent ratings. Focus on niche or higher-quality options.</div>`)[0];
+                popup_d5d124c7277d9f19e317815c51beb84e.setContent(html_f8528f06bc1d89a67af76584daba4a3f);
+            
+        
+
+        marker_72e5aeb6485110aa1b0eacffe6d59b2b.bindPopup(popup_d5d124c7277d9f19e317815c51beb84e)
+        ;
+
+        
+    
+    
+            var marker_69b637e417d4f31fc5b7369834dfcc63 = L.marker(
+                [53.39227126000001, -2.5725142599999997],
+                {
+}
+            ).addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var div_icon_21d037f8d8f0998f81313161ebe12eb1 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"font-size: 14px; font-weight: bold; color: black; background-color: white;\n                            border-radius: 50%; text-align: center; width: 25px; height: 25px;\n                            line-height: 25px; border: 2px solid blue;\"\u003e\n                    4\n                \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+            marker_69b637e417d4f31fc5b7369834dfcc63.setIcon(div_icon_21d037f8d8f0998f81313161ebe12eb1);
+        
+    
+        var popup_8edf381d76b3d4aadbbfc647305ce691 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_951d656d3d1e22295ede0dacd69f0779 = $(`<div id="html_951d656d3d1e22295ede0dacd69f0779" style="width: 100.0%; height: 100.0%;"><b>Cluster 4</b><br>Total Businesses: 20.0<br>Average Rating: 4.19<br>Total Reviews: 1826.0<br><i>Insight:</i> Underserved. Great opportunity for gyms or family-oriented businesses.</div>`)[0];
+                popup_8edf381d76b3d4aadbbfc647305ce691.setContent(html_951d656d3d1e22295ede0dacd69f0779);
+            
+        
+
+        marker_69b637e417d4f31fc5b7369834dfcc63.bindPopup(popup_8edf381d76b3d4aadbbfc647305ce691)
+        ;
+
+        
+    
+    
+            var marker_c213c68d8fd57903df5b5637120f4f0c = L.marker(
+                [53.400983580555554, -2.594283113888889],
+                {
+}
+            ).addTo(map_072e06e99091eeb025ca5fc9039c5756);
+        
+    
+            var div_icon_279d1b3ff294da8cc3ff9ed6cf55c6ae = L.divIcon({
+  "html": "\n                \u003cdiv style=\"font-size: 14px; font-weight: bold; color: black; background-color: white;\n                            border-radius: 50%; text-align: center; width: 25px; height: 25px;\n                            line-height: 25px; border: 2px solid blue;\"\u003e\n                    5\n                \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+            marker_c213c68d8fd57903df5b5637120f4f0c.setIcon(div_icon_279d1b3ff294da8cc3ff9ed6cf55c6ae);
+        
+    
+        var popup_429feb16c51a8832b1534955a92de47c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c86b31aed2ea224b59a6c0267889df81 = $(`<div id="html_c86b31aed2ea224b59a6c0267889df81" style="width: 100.0%; height: 100.0%;"><b>Cluster 5</b><br>Total Businesses: 36.0<br>Average Rating: 4.34<br>Total Reviews: 12055.0<br><i>Insight:</i> General cluster. Mix of business opportunities.</div>`)[0];
+                popup_429feb16c51a8832b1534955a92de47c.setContent(html_c86b31aed2ea224b59a6c0267889df81);
+            
+        
+
+        marker_c213c68d8fd57903df5b5637120f4f0c.bindPopup(popup_429feb16c51a8832b1534955a92de47c)
+        ;
+
+        
+    
+</script>
+</html>
