@@ -78,7 +78,7 @@ body {
 }
 
 .legend {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     left: 20px;
     background: var(--legend-background-color);
@@ -88,7 +88,7 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     max-width: 300px;
     transition: opacity 0.3s ease;
-    z-index: 1000;
+    z-index: 9999;
 }
 
 .legend:hover {
