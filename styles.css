@@ -98,12 +98,15 @@ body {
 
 @media (max-width: 768px) {
     .legend {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        margin: 1rem auto;
-        width: 100%;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+        width: 90%;
         max-width: none;
+        font-size: 0.9rem;
+        padding: 10px;
     }
 }
 
